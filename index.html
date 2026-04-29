@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PLMUN Student Portal</title>
+    <link rel="stylesheet" href="LogIn.css" />
+    <link rel="icon" type="image/jpg" href="Project/plmun logo 96x96.jpg" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="page">
+      <div class="topbar">
+        <img src="Project/logo.png" height="50" alt="PLMUN Logo" />
+        <div>
+          <p>PLMUN</p>
+          <p>PAMANTASAN NG LUNGSOD NG MUNTINLUPA</p>
+        </div>
+      </div>
+
+      <div class="card">
+  <h2>PLMun Student Portal</h2>
+  <p class="subtitle">Fill out the Form to Login</p>
+  <label>Student Number</label>
+  <div class="input-group">
+    <span class="icon">👤</span>
+    <input id="studentNumber" type="text" placeholder="Enter your student number">
+  </div>
+
+  <label>Pin Number</label>
+  <div class="input-group">
+    <span class="icon">🔑</span>
+    <input id="pinNumber" type="password" placeholder="Enter your pin">
+  </div>
+
+  <label>Captcha Code</label>
+  <div class="captcha-container">
+    <div id="captchaDisplay" class="captcha-display"></div>
+    <button type="button" id="refreshCaptcha" class="refresh-btn">🔄 Refresh</button>
+  </div>
+
+  <div class="input-group">
+    <span class="icon">🔢</span>
+    <input id="captchaCode" type="text" placeholder="Enter captcha code" maxlength="6">
+  </div>
+  <small>*Enter the captcha code above</small><br>
+  <button id="signInBtn" type="button" class="signin">Sign in</button><br>
+  <div id="loginMessage" class="login-message" style="display:none;"></div>
+  <a href="recover.html" class="faceid">Recover Account (Face ID)</a>
+
+</div>
+<footer>
+  <hr>
+  author: CS2D-3<br>
+  &copy;copyright reserved<br>
+</footer>
+  <script>
+    // Captcha system
+    function generateCaptcha() {
+      const chars = '0123456789';
+      let captcha = '';
+      for (let i = 0; i < 6; i++) {
+        captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      captcha = captcha.toUpperCase();
+      sessionStorage.setItem('captchaCode', captcha);
+      displayCaptcha(captcha);
+    }
+
+    function displayCaptcha(code) {
+      const display = document.getElementById('captchaDisplay');
+      display.innerHTML = code
+        .split('')
+        .map((char, i) => {
+          const rotation = (Math.random() - 0.5) * 20;
+          const yShift = (Math.random() - 0.5) * 10;
+          return `<span style="transform: rotate(${rotation}deg) translateY(${yShift}px); display: inline-block; font-weight: bold; font-size: 24px; letter-spacing: 8px;">${char}</span>`;
+        })
+        .join('');
+    }
+
+    const refreshBtn = document.getElementById('refreshCaptcha');
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        generateCaptcha();
+      });
+    }
+
+    // Initialize captcha on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      generateCaptcha();
+    });
+
+    const signInBtn = document.getElementById('signInBtn');
+    const studentNumber = document.getElementById('studentNumber');
+    const pinNumber = document.getElementById('pinNumber');
+    const captchaCodeInput = document.getElementById('captchaCode');
+    const loginMessage = document.getElementById('loginMessage');
+
+    function showLoginMessage(text, type = 'error') {
+      loginMessage.textContent = text;
+      loginMessage.className = `login-message ${type}`;
+      loginMessage.style.display = 'block';
+    }
+
+    signInBtn.addEventListener('click', () => {
+      const studentValue = studentNumber ? studentNumber.value.trim() : '';
+      const pinValue = pinNumber.value.trim();
+      const captchaValue = captchaCodeInput.value.trim().toUpperCase();
+      const storedCaptcha = sessionStorage.getItem('captchaCode');
+      const storedPin = localStorage.getItem('confirmedPin');
+      const changedPin = localStorage.getItem('newPin');
+
+      if (!studentValue || !pinValue || !captchaValue) {
+        showLoginMessage('Please fill in all fields including captcha.');
+        return;
+      }
+
+      if (!storedCaptcha || captchaValue !== storedCaptcha) {
+        showLoginMessage('Incorrect captcha code. Try again.');
+        generateCaptcha();
+        return;
+      }
+
+      if (changedPin && pinValue === changedPin) {
+        window.location.href = 'success.html';
+        return;
+      }
+
+      if (storedPin && pinValue === storedPin) {
+        window.location.href = 'success.html';
+        return;
+      }
+
+      showLoginMessage('Incorrect password. Click Face ID to recover your account.');
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('pinChanged') === 'true') {
+        showLoginMessage('✅ Your pin was changed successfully. Please sign in with the new pin.', 'success');
+        localStorage.removeItem('pinChanged');
+      }
+    });
+  </script>
+  </body>
+</html>

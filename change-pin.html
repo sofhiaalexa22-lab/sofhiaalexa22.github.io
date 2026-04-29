@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Change Pin Number</title>
+    <link rel="stylesheet" href="recovery.css" />
+    <link rel="icon" type="image/jpg" href="Project/plmun logo 96x96.jpg" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .pin-card {
+        width: 100%;
+        max-width: 420px;
+        margin: auto;
+        background: linear-gradient(
+          135deg,
+          rgba(30, 40, 45, 0.98) 0%,
+          rgba(40, 50, 55, 0.95) 100%
+        );
+        border: 2px solid #7ebd6c;
+        border-radius: 24px;
+        padding: 35px;
+        box-shadow:
+          0 30px 60px rgba(0, 0, 0, 0.5),
+          0 0 30px rgba(126, 189, 108, 0.15);
+        color: white;
+      }
+
+      .pin-card h2 {
+        margin-top: 0;
+        color: #7ebd6c;
+        font-size: 26px;
+        text-align: center;
+      }
+
+      .pin-card p {
+        color: #b8c7b2;
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      .input-with-icon {
+        position: relative;
+        margin-bottom: 18px;
+      }
+
+      .input-with-icon input {
+        width: 85%;
+        padding: 14px 48px 14px 18px;
+        border-radius: 14px;
+        border: 1px solid rgba(126, 189, 108, 0.4);
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .input-with-icon input:focus {
+        background: rgba(126, 189, 108, 0.08);
+        border-color: #7ebd6c;
+        box-shadow: 0 0 12px rgba(126, 189, 108, 0.2);
+      }
+
+      .input-with-icon input::-webkit-outer-spin-button,
+      .input-with-icon input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .input-with-icon .eye-button {
+        position: absolute;
+        right: 12px;
+        bottom: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        background: rgba(126, 189, 108, 0.16);
+        border: none;
+        border-radius: 8px;
+        color: #d4ffcc;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .input-with-icon label {
+        display: block;
+        margin-bottom: 8px;
+        color: #d4ffcc;
+      }
+
+      .change-message {
+        margin: 22px 0 12px;
+        padding: 14px 16px;
+        border-radius: 14px;
+        background: rgba(126, 189, 108, 0.12);
+        border: 1px solid rgba(126, 189, 108, 0.3);
+        color: #d8f6c4;
+        text-align: center;
+      }
+
+      .confirm-button {
+        width: 100%;
+        padding: 14px 18px;
+        background: #7ebd6c;
+        color: #08190d;
+        border: none;
+        border-radius: 14px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .confirm-button:hover {
+        transform: translateY(-2px);
+        background: #6aa55a;
+      }
+
+      .back-link {
+        display: inline-block;
+        margin-top: 16px;
+        color: #b8c7b2;
+        text-decoration: none;
+      }
+
+      .back-link:hover {
+        color: #ffffff;
+      }
+
+      @media (max-width: 480px) {
+        .pin-card {
+          padding: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="topbar">
+        <img src="Project/logo.png" height="50" alt="PLMUN Logo" />
+        <div>
+          <p>PLMUN</p>
+          <p>PAMANTASAN NG LUNGSOD NG MUNTINLUPA</p>
+        </div>
+      </div>
+
+      <div class="pin-card">
+        <h2>Change Pin Number</h2>
+        <p>
+          Enter a new pin and confirm it. Tap the eye icon to reveal your pin.
+        </p>
+
+        <div class="input-with-icon">
+          <label for="newPin">New Pin Number</label>
+          <input
+            id="newPin"
+            type="password"
+            placeholder="New 4-digit pin"
+            maxlength="4"
+          />
+        </div>
+
+        <div class="input-with-icon">
+          <label for="confirmPin">Confirm Pin Number</label>
+          <button type="button" class="eye-button" data-target="confirmPin">
+            👁️
+          </button>
+          <input
+            id="confirmPin"
+            type="password"
+            placeholder="Confirm new pin"
+            maxlength="4"
+          />
+        </div>
+
+        <div
+          id="changeMessage"
+          class="change-message"
+          style="display: none"
+        ></div>
+
+        <button id="confirmPinBtn" type="button" class="confirm-button">
+          Confirm
+        </button>
+
+        <a href="index.html" class="back-link">← Back to sign in</a>
+      </div>
+    </div>
+
+    <script>
+      const toggleButtons = document.querySelectorAll(".eye-button");
+      const newPinInput = document.getElementById("newPin");
+      const confirmPinInput = document.getElementById("confirmPin");
+      const confirmPinBtn = document.getElementById("confirmPinBtn");
+      const changeMessage = document.getElementById("changeMessage");
+
+      // Restrict input to numbers only and max 4 digits
+      [newPinInput, confirmPinInput].forEach((input) => {
+        input.addEventListener("input", (e) => {
+          e.target.value = e.target.value.replace(/[^0-9]/g, "").slice(0, 4);
+        });
+      });
+
+      toggleButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const targetId = button.dataset.target;
+          const input = document.getElementById(targetId);
+          if (!input) return;
+          const isPassword = input.type === "password";
+          input.type = isPassword ? "text" : "password";
+          button.textContent = isPassword ? "🙈" : "👁️";
+        });
+      });
+
+      function showChangeMessage(text, success = false) {
+        changeMessage.textContent = text;
+        changeMessage.style.display = "block";
+        changeMessage.style.background = success
+          ? "rgba(126, 189, 108, 0.14)"
+          : "rgba(255, 90, 90, 0.14)";
+        changeMessage.style.border = success
+          ? "1px solid rgba(126, 189, 108, 0.4)"
+          : "1px solid rgba(255, 90, 90, 0.4)";
+        changeMessage.style.color = success ? "#d8f6c4" : "#ffb3b3";
+      }
+
+      confirmPinBtn.addEventListener("click", () => {
+        const newPin = newPinInput.value.trim();
+        const confirmPin = confirmPinInput.value.trim();
+
+        if (!newPin || !confirmPin) {
+          showChangeMessage("Please fill both pin fields.");
+          return;
+        }
+
+        if (newPin.length !== 4 || confirmPin.length !== 4) {
+          showChangeMessage("Pin must be exactly 4 digits.");
+          return;
+        }
+
+        if (!/^[0-9]{4}$/.test(newPin)) {
+          showChangeMessage("Pin must contain only numbers.");
+          return;
+        }
+
+        if (newPin !== confirmPin) {
+          showChangeMessage("Pin numbers do not match. Please try again.");
+          return;
+        }
+
+        localStorage.setItem("newPin", newPin);
+        localStorage.setItem("pinChanged", "true");
+        showChangeMessage(
+          "✅ Pin changed successfully. Redirecting to sign in...",
+          true,
+        );
+
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1300);
+      });
+    </script>
+  </body>
+</html>

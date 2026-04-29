@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PLMUN Student Portal</title>
+    <link rel="icon" type="image/jpg" href="Project/plmun logo 96x96.jpg" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: #11161e;
+        color: #e5e9f0;
+      }
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 14px 24px;
+        background: linear-gradient(90deg, #10131a 0%, #141a23 100%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      .navbar-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .navbar-left img {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        object-fit: cover;
+      }
+      .brand {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .brand h1 {
+        margin: 0;
+        font-size: 18px;
+        letter-spacing: 0.6px;
+      }
+      .brand p {
+        margin: 0;
+        font-size: 12px;
+        color: #8da0b0;
+      }
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+      }
+      .nav-links a {
+        color: #cbd6ea;
+        text-decoration: none;
+        font-size: 13px;
+        padding: 8px 10px;
+        border-radius: 8px;
+      }
+      .nav-links a:hover {
+        background: rgba(126, 189, 108, 0.15);
+        color: #ffffff;
+      }
+      .nav-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .nav-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border: 1px solid rgba(126, 189, 108, 0.25);
+        background: rgba(126, 189, 108, 0.08);
+        color: #d9f2c5;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .hero {
+        padding: 32px 24px 18px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .hero-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+      .hero-title h2 {
+        margin: 0;
+        font-size: 28px;
+      }
+      .hero-title .welcome {
+        color: #a3c98a;
+        font-size: 14px;
+      }
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 24px;
+        margin-top: 24px;
+      }
+      .section {
+        background: #151a23;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      }
+      .section h3 {
+        margin: 0 0 16px;
+        font-size: 18px;
+        letter-spacing: 0.3px;
+      }
+      .announcement {
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.02);
+        padding: 18px 20px;
+        margin-bottom: 16px;
+        border-left: 4px solid #7ebd6c;
+      }
+      .announcement h4 {
+        margin: 0 0 8px;
+        font-size: 16px;
+      }
+      .announcement p {
+        margin: 0;
+        color: #c3d9b5;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .announcement .meta {
+        margin-top: 12px;
+        font-size: 12px;
+        color: #7d8b9d;
+      }
+      .status-card {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .status-card .tile {
+        padding: 18px 20px;
+        border-radius: 18px;
+        background: rgba(126, 189, 108, 0.08);
+        border: 1px solid rgba(126, 189, 108, 0.14);
+      }
+      .tile h4 {
+        margin: 0 0 12px;
+        font-size: 14px;
+        color: #d7f0c2;
+      }
+      .tile p {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 700;
+        color: #ffffff;
+      }
+      .announcement-list {
+        display: flex;
+        flex-direction: column;
+      }
+      .summary-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 16px;
+      }
+      .summary-card {
+        padding: 18px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .summary-card h4 {
+        margin: 0 0 10px;
+        color: #b0d79c;
+        font-size: 14px;
+      }
+      .summary-card p {
+        margin: 0;
+        color: #cfd9e4;
+        font-size: 13px;
+      }
+      .footer {
+        margin: 40px auto 20px;
+        max-width: 1200px;
+        padding: 0 24px;
+        font-size: 13px;
+        color: #6f7a8a;
+      }
+      @media (max-width: 980px) {
+        .content-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 680px) {
+        .navbar {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 12px;
+        }
+        .nav-links {
+          justify-content: center;
+        }
+        .hero-title {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .summary-box {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="navbar-left">
+        <img src="Project/logo.png" alt="PLMUN Logo" />
+        <div class="brand">
+          <h1>PLMUN Student Portal</h1>
+          <p>2025-2026 / 2nd Semester / BSCS</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#">eCOG</a>
+        <a href="#">e-Consultation</a>
+        <a href="#">Downloadable Forms</a>
+        <a href="#">Enrollment Services</a>
+        <a href="#">Support</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="#" class="nav-button">Notifications</a>
+        <a href="index.html" class="nav-button">Logout</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-title">
+        <div>
+          <h2>Welcome Back, Student!</h2>
+          <div class="welcome">
+            Your account is verified. Here are the latest updates for today.
+          </div>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <div class="section">
+          <h3>Latest Announcements</h3>
+          <div class="announcement-list">
+            <div class="announcement">
+              <h4>Campus Library System Maintenance</h4>
+              <p>
+                Library databases will be unavailable this Friday from 10:00 PM
+                until 2:00 AM for scheduled maintenance.
+              </p>
+              <div class="meta">Posted today at 9:00 AM</div>
+            </div>
+            <div class="announcement">
+              <h4>Student Workshop: Career Readiness</h4>
+              <p>
+                Join the Career Services team on Monday for a virtual workshop
+                on resume building and interview skills.
+              </p>
+              <div class="meta">Posted today at 8:15 AM</div>
+            </div>
+            <div class="announcement">
+              <h4>Reminder: Library Book Returns</h4>
+              <p>
+                Please return all borrowed books by the end of the month to
+                avoid overdue fees.
+              </p>
+              <div class="meta">Posted yesterday at 5:40 PM</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="section">
+          <h3>Your Portal Snapshot</h3>
+          <div class="status-card">
+            <div class="tile">
+              <h4>Unread Notices</h4>
+              <p>3</p>
+            </div>
+            <div class="tile">
+              <h4>Events This Week</h4>
+              <p>2</p>
+            </div>
+          </div>
+
+          <div class="summary-box">
+            <div class="summary-card">
+              <h4>Next Deadline</h4>
+              <p>Campus form submission closes Friday.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Next Event</h4>
+              <p>Online consultation session on Wednesday.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="footer">
+      This is a demo portal page created after successful sign in. Use the
+      navigation links above to access services.
+    </footer>
+  </body>
+</html>

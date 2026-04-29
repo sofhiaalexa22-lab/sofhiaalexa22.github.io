@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PLMUN Student Portal: Facial Recognition</title>
+    <link rel="stylesheet" href="recovery.css" />
+    <link rel="icon" type="image/jpg" href="Project/plmun logo 96x96.jpg" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+  </head>
+  <body>
+    <div class="page">
+      <div class="topbar">
+        <img src="Project/logo.png" height="50" alt="PLMUN Logo" />
+        <div>
+          <p>PLMUN</p>
+          <p>PAMANTASAN NG LUNGSOD NG MUNTINLUPA</p>
+        </div>
+      </div>
+
+      <div class="facial-recognition-container">
+        <div class="fr-header">
+          <h1>🔒 Facial Recognition Verification</h1>
+          <p>
+            Verify your identity using facial recognition, then smile and blink
+            to confirm you are a real person.
+          </p>
+        </div>
+
+        <div class="fr-content">
+          <div class="camera-section">
+            <div class="camera-wrapper">
+              <video id="webcam" autoplay playsinline muted></video>
+              <canvas id="canvas" style="display: none"></canvas>
+              <div class="face-guide">
+                <div class="guide-ring"></div>
+                <p class="guide-text">
+                  Align your face inside the circle for best recognition
+                </p>
+              </div>
+              <div id="status-indicator" class="status-idle">Ready</div>
+            </div>
+          </div>
+
+          <div class="controls-section">
+            <button id="startBtn" class="btn btn-primary">
+              🎥 Start Camera
+            </button>
+            <button id="stopBtn" class="btn btn-secondary" disabled>
+              ⏹ Stop Camera
+            </button>
+          </div>
+
+          <div
+            class="results-section"
+            id="resultsSection"
+            style="display: none"
+          >
+            <h3>Recognition Results</h3>
+            <div id="detectionResults" class="detection-results">
+              <p>No faces detected yet</p>
+            </div>
+            <a
+              id="continueBtn"
+              class="btn btn-success continue-button"
+              href="change-pin.html"
+              style="display: none"
+              >✅ Identity Confirmed — Continue</a
+            >
+          </div>
+
+          <div class="info-section">
+            <h3>How It Works</h3>
+            <ul>
+              <li>Click "Start Camera" to enable your webcam</li>
+              <li>Position your face clearly in front of the circle guide</li>
+              <li>Smile and blink naturally when prompted</li>
+              <li>
+                The system will verify automatically once smile and blink are
+                detected
+              </li>
+              <li>
+                After confirmation, you will proceed to change your pin number
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="facial-recognition.js"></script>
+</html>
